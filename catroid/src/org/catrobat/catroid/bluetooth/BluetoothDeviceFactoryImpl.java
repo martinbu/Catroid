@@ -26,6 +26,7 @@ import android.content.Context;
 
 import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
 import org.catrobat.catroid.bluetooth.base.BluetoothDeviceFactory;
+import org.catrobat.catroid.devices.arduino.kodey.KodeyImpl;
 
 public class BluetoothDeviceFactoryImpl implements BluetoothDeviceFactory {
 
@@ -43,6 +44,10 @@ public class BluetoothDeviceFactoryImpl implements BluetoothDeviceFactory {
 //        if (service == BTDeviceService.ARDUINO) {
 //            return new Arduino();
 //        }
+
+		if (service == BluetoothDevice.KODEY) {
+			return new KodeyImpl();
+		}
 
 		return null; // may throw exception
 	}
