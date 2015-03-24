@@ -894,6 +894,14 @@ public class FormulaElement implements Serializable {
 				case FACE_Y_POSITION:
 					ressources |= Brick.FACE_DETECTION;
 					break;
+				case KODEY_FRONT_LEFT:
+				case KODEY_FRONT_RIGHT:
+				case KODEY_SIDE_LEFT:
+				case KODEY_SIDE_RIGHT:
+				case KODEY_BOTTOM_LEFT:
+				case KODEY_BOTTOM_RIGHT:
+					ressources |= Brick.BLUETOOTH_KODEY;
+					break;
 				default:
 
 			}

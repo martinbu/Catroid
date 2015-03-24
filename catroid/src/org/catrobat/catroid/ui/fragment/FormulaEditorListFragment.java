@@ -25,7 +25,9 @@ package org.catrobat.catroid.ui.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -40,6 +42,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 
+import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
 
 public class FormulaEditorListFragment extends SherlockListFragment implements Dialog.OnKeyListener {
@@ -98,6 +101,18 @@ public class FormulaEditorListFragment extends SherlockListFragment implements D
 			R.string.formula_editor_sensor_face_detected, R.string.formula_editor_sensor_face_size,
 			R.string.formula_editor_sensor_face_x_position, R.string.formula_editor_sensor_face_y_position };
 
+	private static final int[] SENSOR_ITEMS_WITH_KODEY = { R.string.formula_editor_sensor_x_acceleration,
+			R.string.formula_editor_sensor_y_acceleration, R.string.formula_editor_sensor_z_acceleration,
+			R.string.formula_editor_sensor_compass_direction, R.string.formula_editor_sensor_x_inclination,
+			R.string.formula_editor_sensor_y_inclination, R.string.formula_editor_sensor_loudness,
+			R.string.formula_editor_sensor_face_detected, R.string.formula_editor_sensor_face_size,
+			R.string.formula_editor_sensor_face_x_position, R.string.formula_editor_sensor_face_y_position,
+			R.string.formula_editor_kodey_sensor_front_left, R.string.formula_editor_kodey_sensor_front_right,
+			R.string.formula_editor_kodey_sensor_side_left, R.string.formula_editor_kodey_sensor_side_right,
+			R.string.formula_editor_kodey_sensor_bottom_left, R.string.formula_editor_kodey_sensor_bottom_right};
+
+	private String tag;
+	private String[] items;
 	private String actionBarTitle;
 	private int[] itemsIds;
 
@@ -143,6 +158,38 @@ public class FormulaEditorListFragment extends SherlockListFragment implements D
 					: getString(itemsIds[index]);
 		}
 
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+				R.layout.fragment_formula_editor_list_item, items);
+		setListAdapter(arrayAdapter);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		this.tag = getArguments().getString(FRAGMENT_TAG_BUNDLE_ARGUMENT);
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		ProjectManager.getInstance().getCurrentProject().setIsKodeyProject(false);
+		if (((sharedPreferences.getBoolean("setting_enable_kodey_bricks", false)) || (ProjectManager.getInstance()
+				.getCurrentProject().checkIfKodeyProject())) && tag == SENSOR_TAG) {
+			itemsIds = SENSOR_ITEMS_WITH_KODEY;
+			ProjectManager.getInstance().getCurrentProject().setIsKodeyProject(true);
+		} else {
+			if (tag == OBJECT_TAG) {
+				itemsIds = OBJECT_ITEMS;
+			} else if (tag == FUNCTION_TAG) {
+				itemsIds = FUNCTIONS_ITEMS;
+			} else if (tag == LOGIC_TAG) {
+				itemsIds = LOGIC_ITEMS;
+			} else if (tag == SENSOR_TAG) {
+				itemsIds = SENSOR_ITEMS;
+			}
+		}
+		items = new String[itemsIds.length];
+		int index = 0;
+		for (Integer item : itemsIds) {
+			items[index] = getString(item);
+			index++;
+		}
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
 				R.layout.fragment_formula_editor_list_item, items);
 		setListAdapter(arrayAdapter);
