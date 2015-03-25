@@ -28,6 +28,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.Log;
 
+import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
+import org.catrobat.catroid.common.CatroidService;
+import org.catrobat.catroid.common.ServiceProvider;
+import org.catrobat.catroid.devices.arduino.phiropro.PhiroPro;
 import org.catrobat.catroid.facedetection.FaceDetectionHandler;
 
 public final class SensorHandler implements SensorEventListener, SensorCustomEventListener {
@@ -166,6 +170,16 @@ public final class SensorHandler implements SensorEventListener, SensorCustomEve
 
 			case LOUDNESS:
 				return (double) instance.loudness;
+
+			case PHIRO_PRO_BOTTOM_LEFT:
+			case PHIRO_PRO_BOTTOM_RIGHT:
+			case PHIRO_PRO_FRONT_LEFT:
+			case PHIRO_PRO_FRONT_RIGHT:
+			case PHIRO_PRO_SIDE_LEFT:
+			case PHIRO_PRO_SIDE_RIGHT:
+				PhiroPro phiroPro = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).
+						getDevice(BluetoothDevice.PHIRO_PRO);
+				return Double.valueOf(phiroPro.getSensorValue(sensor));
 		}
 		return 0d;
 	}
