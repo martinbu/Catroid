@@ -30,15 +30,15 @@
               android:orientation="horizontal" >
 
     <CheckBox
-        android:id="@+id/brick_kodey_motor_stop_checkbox"
+        android:id="@+id/brick_phiro_pro_motor_stop_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:visibility="gone" />
 
     <org.catrobat.catroid.ui.BrickLayout
-        android:id="@+id/brick_kodey_motor_stop_layout"
-        style="@style/BrickContainer.Kodey.Small"
+        android:id="@+id/brick_phiro_pro_motor_stop_layout"
+        style="@style/BrickContainer.PhiroPro.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -48,11 +48,11 @@
         <TextView
             android:id="@+id/ValueTextView"
             style="@style/BrickText.SingleLine"
-            android:text="@string/kodey_motor_stop" >
+            android:text="@string/phiro_pro_motor_stop" >
         </TextView >
 
         <Spinner
-            android:id="@+id/brick_kodey_stop_motor_spinner"
+            android:id="@+id/brick_phiro_pro_stop_motor_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"

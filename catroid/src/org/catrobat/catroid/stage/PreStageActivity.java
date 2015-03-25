@@ -97,8 +97,8 @@ public class PreStageActivity extends BaseActivity {
 			startActivityForResult(checkIntent, REQUEST_TEXT_TO_SPEECH);
 		}
 
-		if ((requiredResources & Brick.BLUETOOTH_KODEY) > 0) {
-			connectBTDevice(BluetoothDevice.KODEY, false);
+		if ((requiredResources & Brick.BLUETOOTH_PHIRO_PRO) > 0) {
+			connectBTDevice(BluetoothDevice.PHIRO_PRO, false);
 		}
 
 		if ((requiredResources & Brick.ARDRONE_SUPPORT) > 0) {

@@ -101,15 +101,15 @@ public class FormulaEditorListFragment extends SherlockListFragment implements D
 			R.string.formula_editor_sensor_face_detected, R.string.formula_editor_sensor_face_size,
 			R.string.formula_editor_sensor_face_x_position, R.string.formula_editor_sensor_face_y_position };
 
-	private static final int[] SENSOR_ITEMS_WITH_KODEY = { R.string.formula_editor_sensor_x_acceleration,
+	private static final int[] SENSOR_ITEMS_WITH_PHIRO_PRO = { R.string.formula_editor_sensor_x_acceleration,
 			R.string.formula_editor_sensor_y_acceleration, R.string.formula_editor_sensor_z_acceleration,
 			R.string.formula_editor_sensor_compass_direction, R.string.formula_editor_sensor_x_inclination,
 			R.string.formula_editor_sensor_y_inclination, R.string.formula_editor_sensor_loudness,
 			R.string.formula_editor_sensor_face_detected, R.string.formula_editor_sensor_face_size,
 			R.string.formula_editor_sensor_face_x_position, R.string.formula_editor_sensor_face_y_position,
-			R.string.formula_editor_kodey_sensor_front_left, R.string.formula_editor_kodey_sensor_front_right,
-			R.string.formula_editor_kodey_sensor_side_left, R.string.formula_editor_kodey_sensor_side_right,
-			R.string.formula_editor_kodey_sensor_bottom_left, R.string.formula_editor_kodey_sensor_bottom_right};
+			R.string.formula_editor_phiro_pro_sensor_front_left, R.string.formula_editor_phiro_pro_sensor_front_right,
+			R.string.formula_editor_phiro_pro_sensor_side_left, R.string.formula_editor_phiro_pro_sensor_side_right,
+			R.string.formula_editor_phiro_pro_sensor_bottom_left, R.string.formula_editor_phiro_pro_sensor_bottom_right};
 
 	private String tag;
 	private String[] items;
@@ -168,11 +168,11 @@ public class FormulaEditorListFragment extends SherlockListFragment implements D
 		super.onResume();
 		this.tag = getArguments().getString(FRAGMENT_TAG_BUNDLE_ARGUMENT);
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		ProjectManager.getInstance().getCurrentProject().setIsKodeyProject(false);
-		if (((sharedPreferences.getBoolean("setting_enable_kodey_bricks", false)) || (ProjectManager.getInstance()
-				.getCurrentProject().checkIfKodeyProject())) && tag == SENSOR_TAG) {
-			itemsIds = SENSOR_ITEMS_WITH_KODEY;
-			ProjectManager.getInstance().getCurrentProject().setIsKodeyProject(true);
+		ProjectManager.getInstance().getCurrentProject().setIsPhiroProProject(false);
+		if (((sharedPreferences.getBoolean("setting_enable_phiro_pro_bricks", false)) || (ProjectManager.getInstance()
+				.getCurrentProject().checkIfPhiroProProject())) && tag == SENSOR_TAG) {
+			itemsIds = SENSOR_ITEMS_WITH_PHIRO_PRO;
+			ProjectManager.getInstance().getCurrentProject().setIsPhiroProProject(true);
 		} else {
 			if (tag == OBJECT_TAG) {
 				itemsIds = OBJECT_ITEMS;
