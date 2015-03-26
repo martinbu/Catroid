@@ -179,7 +179,14 @@ public final class SensorHandler implements SensorEventListener, SensorCustomEve
 			case PHIRO_PRO_SIDE_RIGHT:
 				PhiroPro phiroPro = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).
 						getDevice(BluetoothDevice.PHIRO_PRO);
-				return Double.valueOf(phiroPro.getSensorValue(sensor));
+				if (phiroPro != null) {
+					double v =  Double.valueOf(phiroPro.getSensorValue(sensor));
+					Log.d(TAG, sensor.name() + " value: " + v);
+					return v;
+				}
+				else {
+					Log.d(TAG, "PhiroPro is null in Sensor Handler");
+				}
 		}
 		return 0d;
 	}
