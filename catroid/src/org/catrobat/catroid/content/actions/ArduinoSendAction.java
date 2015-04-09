@@ -20,29 +20,40 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.catroid.bluetooth.base;
+package org.catrobat.catroid.content.actions;
 
+import android.util.Log;
+
+import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
+
+import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
 import org.catrobat.catroid.devices.arduino.Arduino;
-import org.catrobat.catroid.devices.arduino.phiro.Phiro;
-import org.catrobat.catroid.devices.mindstorms.nxt.LegoNXT;
-import org.catrobat.catroid.stage.StageResourceInterface;
+import org.catrobat.catroid.common.CatroidService;
+import org.catrobat.catroid.common.ServiceProvider;
+import org.catrobat.catroid.content.Sprite;
 
-import java.util.UUID;
+public class ArduinoSendAction extends TemporalAction {
 
-public interface BluetoothDevice extends StageResourceInterface {
+	private String pinNumber;
+	private int pinValue;
+	private Sprite sprite;
 
-	Class<LegoNXT> LEGO_NXT = LegoNXT.class;
-	Class<Phiro> PHIRO = Phiro.class;
-	Class<Arduino> ARDUINO = Arduino.class;
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
 
-//	Class<Albert> ALBERT = Albert.class;
+	public void setPinNumber(String newPinNumber) {
+		pinNumber = newPinNumber;
+	}
 
-	String getName();
-	Class<? extends BluetoothDevice> getDeviceType();
-	void setConnection(BluetoothConnection connection);
-	void disconnect();
+	public void setPinValue(int newpinValue) {
+		pinValue = newpinValue;
+	}
 
-	boolean isAlive();
-
-	UUID getBluetoothDeviceUUID();
+	@Override
+	protected void update(float percent) {
+		Arduino arduino = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).getDevice(BluetoothDevice.ARDUINO);
+		if(arduino != null)
+			arduino.setDigitalArduinoPin(pinNumber, (char) pinValue);
+	}
 }

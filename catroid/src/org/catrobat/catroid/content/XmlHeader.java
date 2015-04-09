@@ -42,6 +42,8 @@ public class XmlHeader implements Serializable {
 	@XStreamAlias("screenMode")
 	public ScreenModes screenMode = ScreenModes.STRETCH;
 
+
+	private boolean isArudinoProject = false;
 	private float catrobatLanguageVersion;
 
 	private boolean isPhiroProProject = false;
