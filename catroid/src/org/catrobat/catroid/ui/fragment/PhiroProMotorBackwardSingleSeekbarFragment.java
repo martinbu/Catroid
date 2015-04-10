@@ -78,7 +78,7 @@ public class PhiroProMotorBackwardSingleSeekbarFragment extends SherlockFragment
 		setHasOptionsMenu(true);
 		setUpActionBar();
 
-		if(getArguments() != null) {
+		if (getArguments() != null) {
 			currentBrick = (Brick) getArguments().getSerializable(BRICK_BUNDLE_ARGUMENT);
 			speedFormula = (Formula) getArguments().getSerializable(FORMULA_BUNDLE_ARGUMENT_PHIRO_PRO_MOTOR_SPEED);
 		}
@@ -274,7 +274,7 @@ public class PhiroProMotorBackwardSingleSeekbarFragment extends SherlockFragment
 			variableDeletedReceiver = new VariableDeletedReceiver();
 		}
 
-		if(getArguments() != null) {
+		if (getArguments() != null) {
 			currentBrick = (Brick) getArguments().getSerializable(BRICK_BUNDLE_ARGUMENT);
 			speedFormula = (Formula) getArguments().getSerializable(FORMULA_BUNDLE_ARGUMENT_PHIRO_PRO_MOTOR_SPEED);
 		}

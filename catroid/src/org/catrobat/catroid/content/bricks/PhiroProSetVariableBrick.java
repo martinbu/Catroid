@@ -155,17 +155,17 @@ public class PhiroProSetVariableBrick extends FormulaBrick implements OnClickLis
 
 			@Override
 			public boolean onTouch(View view, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					if (((Spinner) view).getSelectedItemPosition() == 0
-							&& ((Spinner) view).getAdapter().getCount() == 1) {
-						NewVariableDialog dialog = new NewVariableDialog((Spinner) view);
-						dialog.addVariableDialogListener(PhiroProSetVariableBrick.this);
-						dialog.show(((SherlockFragmentActivity) view.getContext()).getSupportFragmentManager(),
-								NewVariableDialog.DIALOG_FRAGMENT_TAG);
-						return true;
-					}
-				}
-				return false;
+			if (event.getAction() == MotionEvent.ACTION_UP
+				&& ((Spinner) view).getSelectedItemPosition() == 0
+					&& ((Spinner) view).getAdapter().getCount() == 1) {
+
+				NewVariableDialog dialog = new NewVariableDialog((Spinner) view);
+				dialog.addVariableDialogListener(PhiroProSetVariableBrick.this);
+				dialog.show(((SherlockFragmentActivity) view.getContext()).getSupportFragmentManager(),
+						NewVariableDialog.DIALOG_FRAGMENT_TAG);
+				return true;
+			}
+			return false;
 			}
 		});
 		variableSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -296,10 +296,11 @@ public class PhiroProSetVariableBrick extends FormulaBrick implements OnClickLis
 	}
 
 	private void updateUserVariableIfDeleted(UserVariableAdapterWrapper userVariableAdapterWrapper) {
-		if (userVariable != null) {
-			if (userVariableAdapterWrapper.getPositionOfItem(userVariable) == 0) {
-				userVariable = null;
-			}
+		if (userVariable == null) {
+			return;
+		}
+		if (userVariableAdapterWrapper.getPositionOfItem(userVariable) == 0) {
+			userVariable = null;
 		}
 	}
 

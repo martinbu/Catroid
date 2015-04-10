@@ -90,7 +90,7 @@ public class PhiroProMultipleSeekbarFragment extends SherlockFragment implements
 		setHasOptionsMenu(true);
 		setUpActionBar();
 
-		if(getArguments() != null) {
+		if (getArguments() != null) {
 			currentBrick = (Brick) getArguments().getSerializable(BRICK_BUNDLE_ARGUMENT);
 			redFormula = (Formula) getArguments().getSerializable(FORMULA_BUNDLE_ARGUMENT_RED);
 			greenFormula = (Formula) getArguments().getSerializable(FORMULA_BUNDLE_ARGUMENT_GREEN);
@@ -330,7 +330,7 @@ public class PhiroProMultipleSeekbarFragment extends SherlockFragment implements
 			variableDeletedReceiver = new VariableDeletedReceiver();
 		}
 
-		if(getArguments() != null) {
+		if (getArguments() != null) {
 			currentBrick = (Brick) getArguments().getSerializable(BRICK_BUNDLE_ARGUMENT);
 			redFormula = (Formula) getArguments().getSerializable(FORMULA_BUNDLE_ARGUMENT_RED);
 			greenFormula = (Formula) getArguments().getSerializable(FORMULA_BUNDLE_ARGUMENT_GREEN);

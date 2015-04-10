@@ -202,7 +202,7 @@ public class PhiroProMotorMoveForwardBrick extends FormulaBrick implements OnCli
 		if (checkbox.getVisibility() == View.VISIBLE) {
 			return;
 		}
-		if((speed.getRoot().getElementType() == FormulaElement.ElementType.NUMBER) && (isFormulaEditorPreview == false)){
+		if ((speed.getRoot().getElementType() == FormulaElement.ElementType.NUMBER) && (isFormulaEditorPreview == false)) {
 			PhiroProMotorForwardSingleSeekbarFragment.showSingleSeekBarFragment(view, this, speed);
 		} else {
 			FormulaEditorFragment.showFragment(view, this, speed);

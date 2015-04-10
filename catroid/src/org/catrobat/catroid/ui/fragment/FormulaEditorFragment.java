@@ -142,15 +142,15 @@ public class FormulaEditorFragment extends SherlockFragment implements OnKeyList
 		FragmentTransaction fragTransaction = fragmentManager.beginTransaction();
 
 		Fragment fragment = fragmentManager.findFragmentById(R.id.script_fragment_container);
-		String PHIRO_PRO_TAG = ScriptFragment.TAG;
-		if(fragment.getClass() == PhiroProMotorForwardSingleSeekbarFragment.class) {
-			PHIRO_PRO_TAG = FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG;
+		String phiroProTag = ScriptFragment.TAG;
+		if (fragment.getClass() == PhiroProMotorForwardSingleSeekbarFragment.class) {
+			phiroProTag = FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG;
 			((PhiroProMotorMoveForwardBrick)brick).setIsFormulaEditorPreview(true);
 		} else if(fragment.getClass() == PhiroProMotorBackwardSingleSeekbarFragment.class){
-			PHIRO_PRO_TAG = FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG;
+			phiroProTag = FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG;
 			((PhiroProMotorMoveBackwardBrick)brick).setIsFormulaEditorPreview(true);
 		} else if(fragment.getClass() == PhiroProMultipleSeekbarFragment.class){
-			PHIRO_PRO_TAG = FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG;
+			phiroProTag = FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG;
 			((PhiroProRGBLightBrick)brick).setIsFormulaEditorPreview(true);
 		}
 
@@ -162,17 +162,17 @@ public class FormulaEditorFragment extends SherlockFragment implements OnKeyList
 			formulaEditorFragment.setArguments(bundle);
 
 			fragTransaction.add(R.id.script_fragment_container, formulaEditorFragment, FORMULA_EDITOR_FRAGMENT_TAG);
-			fragTransaction.hide(fragmentManager.findFragmentByTag(PHIRO_PRO_TAG));
+			fragTransaction.hide(fragmentManager.findFragmentByTag(phiroProTag));
 
 			/*
-			//ToDo: #PhiroPro !!!!!!!
-			if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG) != null) {
+			// ToDo: #PhiroPro !!!!!!!
+			if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG) != null) {
 				fragTransaction.hide(fragmentManager.findFragmentByTag(PhiroProMultipleSeekbarFragment.FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG));
 			}
-			if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
+			if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
 				fragTransaction.hide(fragmentManager.findFragmentByTag(PhiroProMotorForwardSingleSeekbarFragment.FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG));
 			}
-			if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
+			if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
 				fragTransaction.hide(fragmentManager.findFragmentByTag(PhiroProMotorBackwardSingleSeekbarFragment.FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG));
 			}
 			*/
@@ -181,17 +181,17 @@ public class FormulaEditorFragment extends SherlockFragment implements OnKeyList
 			BottomBar.hideBottomBar(activity);
 		} else if (formulaEditorFragment.isHidden()) {
 			formulaEditorFragment.updateBrickViewAndFormula(brick, formula);
-			fragTransaction.hide(fragmentManager.findFragmentByTag(PHIRO_PRO_TAG));
+			fragTransaction.hide(fragmentManager.findFragmentByTag(phiroProTag));
 
 			/*
 			//ToDo: #PhiroPro !!!!!!!
-			if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG) != null) {
+			if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG) != null) {
 				fragTransaction.hide(fragmentManager.findFragmentByTag(PhiroProMultipleSeekbarFragment.FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG));
 			}
-			if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
+			if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
 				fragTransaction.hide(fragmentManager.findFragmentByTag(PhiroProMotorForwardSingleSeekbarFragment.FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG));
 			}
-			if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
+			if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
 				fragTransaction.hide(fragmentManager.findFragmentByTag(PhiroProMotorBackwardSingleSeekbarFragment.FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG));
 			}
 			*/
@@ -236,7 +236,7 @@ public class FormulaEditorFragment extends SherlockFragment implements OnKeyList
 		fragTransaction.hide(this);
 
 		//ToDo: #PhiroPro check for RGB Brick
-		if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG) != null) {
+		if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG) != null) {
 			if (fragmentManager.findFragmentByTag(ScriptFragment.TAG).getTag() == FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG) {
 				fragTransaction.show(fragmentManager.findFragmentByTag(PhiroProMultipleSeekbarFragment.FORMULA_EDITOR_MULTIPLE_SEEKBAR_FRAGMENT_TAG));
 				fragTransaction.hide(fragmentManager.findFragmentByTag(ScriptFragment.TAG));
@@ -248,7 +248,7 @@ public class FormulaEditorFragment extends SherlockFragment implements OnKeyList
 			}
 		}
 		//ToDo: #PhiroPro check for Motor Forward Brick
-		else if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
+		else if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
 			if (fragmentManager.findFragmentByTag(ScriptFragment.TAG).getTag() == FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) {
 				fragTransaction.show(fragmentManager.findFragmentByTag(PhiroProMotorForwardSingleSeekbarFragment.FORMULA_EDITOR_MOTOR_FORWARD_SINGLE_SEEKBAR_FRAGMENT_TAG));
 				fragTransaction.hide(fragmentManager.findFragmentByTag(ScriptFragment.TAG));
@@ -260,7 +260,7 @@ public class FormulaEditorFragment extends SherlockFragment implements OnKeyList
 			}
 		}
 		//ToDo: #PhiroPro check for Motor Backward Brick
-		else if(fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
+		else if (fragmentManager.findFragmentByTag(FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) != null) {
 			if (fragmentManager.findFragmentByTag(ScriptFragment.TAG).getTag() == FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG) {
 				fragTransaction.show(fragmentManager.findFragmentByTag(PhiroProMotorBackwardSingleSeekbarFragment.FORMULA_EDITOR_MOTOR_BACKWARD_SINGLE_SEEKBAR_FRAGMENT_TAG));
 				fragTransaction.hide(fragmentManager.findFragmentByTag(ScriptFragment.TAG));
@@ -273,11 +273,11 @@ public class FormulaEditorFragment extends SherlockFragment implements OnKeyList
 		}
 		else {
 			fragTransaction.show(fragmentManager.findFragmentByTag(ScriptFragment.TAG));
-			if(currentBrick.getClass().equals(PhiroProMotorMoveForwardBrick.class)) {
+			if (currentBrick.getClass().equals(PhiroProMotorMoveForwardBrick.class)) {
 					((PhiroProMotorMoveForwardBrick) currentBrick).setIsFormulaEditorPreview(false);
-			} else if(currentBrick.getClass().equals(PhiroProMotorMoveBackwardBrick.class)) {
+			} else if (currentBrick.getClass().equals(PhiroProMotorMoveBackwardBrick.class)) {
 				((PhiroProMotorMoveBackwardBrick) currentBrick).setIsFormulaEditorPreview(false);
-			} else if(currentBrick.getClass().equals(PhiroProRGBLightBrick.class)) {
+			} else if (currentBrick.getClass().equals(PhiroProRGBLightBrick.class)) {
 				((PhiroProRGBLightBrick) currentBrick).setIsFormulaEditorPreview(false);
 			}
 		}

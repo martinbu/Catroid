@@ -203,7 +203,8 @@ public class PhiroProMotorMoveBackwardBrick extends FormulaBrick implements OnCl
 		if (checkbox.getVisibility() == View.VISIBLE) {
 			return;
 		}
-		if((speed.getRoot().getElementType() == FormulaElement.ElementType.NUMBER) && (isFormulaEditorPreview == false)){
+
+		if ((speed.getRoot().getElementType() == FormulaElement.ElementType.NUMBER) && (isFormulaEditorPreview == false)) {
 			PhiroProMotorBackwardSingleSeekbarFragment.showSingleSeekBarFragment(view, this, speed);
 		} else {
 			FormulaEditorFragment.showFragment(view, this, speed);
