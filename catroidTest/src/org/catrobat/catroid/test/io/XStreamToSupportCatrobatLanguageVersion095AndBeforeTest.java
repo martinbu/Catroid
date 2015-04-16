@@ -50,6 +50,7 @@ public class XStreamToSupportCatrobatLanguageVersion095AndBeforeTest extends Ins
 	private static final String ZIP_FILENAME_NOTE_AND_SPEAK_BRICK = "Note_And_Speak_Brick.catrobat";
 	private static final String ZIP_FILENAME_EMPTY_PROJECT = "languageVersion.catrobat";
 	private static final String ZIP_FILENAME_GHOST_EFFECT_BRICKS = "Ghost_Effect_Bricks.catrobat";
+	private static final String ZIP_FILENAME_LEGO_NXT = "old-lego-nxt.catrobat";
 
 
 	private static final String PROJECT_NAME_FALLING_BALLS = "falling balls";
@@ -62,6 +63,7 @@ public class XStreamToSupportCatrobatLanguageVersion095AndBeforeTest extends Ins
 	private static final String PROJECT_NAME_EMPTY_PROJECT = "languageVersion";
 	private static final String PROJECT_NAME_NOTE_AND_SPEAK_BRICK = "noteandspeakbrick";
 	private static final String PROJECT_NAME_GHOST_EFFECT_BRICKS = "ghosteffectbricks";
+	private static final String PROJECT_NAME_LEGO_NXT = "oldlegonxt";
 
 
 	@Override
@@ -74,6 +76,7 @@ public class XStreamToSupportCatrobatLanguageVersion095AndBeforeTest extends Ins
 		copyAssetProjectZipFile(ZIP_FILENAME_XRAY_PHONE, Constants.TMP_PATH);
 		copyAssetProjectZipFile(ZIP_FILENAME_ALL_BRICKS, Constants.TMP_PATH);
 		copyAssetProjectZipFile(ZIP_FILENAME_EMPTY_PROJECT, Constants.TMP_PATH);
+		copyAssetProjectZipFile(ZIP_FILENAME_LEGO_NXT, Constants.TMP_PATH);
 
 		UtilZip.unZipFile(Constants.TMP_PATH + "/" + ZIP_FILENAME_FALLING_BALLS, Constants.DEFAULT_ROOT + "/"
 				+ PROJECT_NAME_FALLING_BALLS);
@@ -91,6 +94,8 @@ public class XStreamToSupportCatrobatLanguageVersion095AndBeforeTest extends Ins
 				+ PROJECT_NAME_ALL_BRICKS);
 		UtilZip.unZipFile(Constants.TMP_PATH + "/" + ZIP_FILENAME_EMPTY_PROJECT, Constants.DEFAULT_ROOT + "/"
 				+ PROJECT_NAME_EMPTY_PROJECT);
+		UtilZip.unZipFile(Constants.TMP_PATH + "/" + ZIP_FILENAME_LEGO_NXT, Constants.DEFAULT_ROOT + "/"
+				+ PROJECT_NAME_LEGO_NXT);
 	}
 
 	@Override
@@ -103,10 +108,11 @@ public class XStreamToSupportCatrobatLanguageVersion095AndBeforeTest extends Ins
 		deleteZipFile(ZIP_FILENAME_XRAY_PHONE, Constants.TMP_PATH);
 		deleteZipFile(ZIP_FILENAME_ALL_BRICKS, Constants.TMP_PATH);
 		deleteZipFile(ZIP_FILENAME_EMPTY_PROJECT, Constants.TMP_PATH);
+		deleteZipFile(ZIP_FILENAME_LEGO_NXT, Constants.TMP_PATH);
 
 		TestUtils.deleteTestProjects(new String[] { PROJECT_NAME_FALLING_BALLS, PROJECT_NAME_COLOR_LEANER_BALLOONS,
 				PROJECT_NAME_PONG_STARTER, PROJECT_NAME_WHIP, PROJECT_NAME_AIR_FIGHT, PROJECT_NAME_XRAY_PHONE,
-				PROJECT_NAME_ALL_BRICKS, PROJECT_NAME_EMPTY_PROJECT});
+				PROJECT_NAME_ALL_BRICKS, PROJECT_NAME_EMPTY_PROJECT, PROJECT_NAME_LEGO_NXT});
 		super.tearDown();
 	}
 
@@ -252,4 +258,9 @@ public class XStreamToSupportCatrobatLanguageVersion095AndBeforeTest extends Ins
 		TestUtils.deleteTestProjects(PROJECT_NAME_GHOST_EFFECT_BRICKS);
 	}
 
+	public void testLoadingLegoNxtProjectsOfCatrobatLanguageVersion092() {
+		Project legoProject = StorageHandler.getInstance().loadProject(PROJECT_NAME_LEGO_NXT);
+		assertTrue("Cannot load " + PROJECT_NAME_LEGO_NXT + " project", legoProject != null);
+		assertEquals("Wrong project loaded", PROJECT_NAME_LEGO_NXT, legoProject.getName().toLowerCase());
+	}
 }
