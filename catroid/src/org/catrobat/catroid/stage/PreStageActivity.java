@@ -106,6 +106,10 @@ public class PreStageActivity extends BaseActivity {
 			connectBTDevice(BluetoothDevice.LEGO_EV3);
 		}
 
+		if ((requiredResources & Brick.BLUETOOTH_SENSORS_ARDUINO) > 0) {
+			connectBTDevice(BluetoothDevice.ARDUINO);
+		}
+
 		if ((requiredResources & Brick.ARDRONE_SUPPORT) > 0) {
 			droneInitializer = getDroneInitializer();
 			droneInitializer.initialise();

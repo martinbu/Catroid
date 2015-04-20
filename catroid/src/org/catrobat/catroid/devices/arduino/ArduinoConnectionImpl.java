@@ -1,6 +1,6 @@
 /*
  * Catroid: An on-device visual programming system for Android devices
- * Copyright (C) 2010-2015 The Catrobat Team
+ * Copyright (C) 2010-2014 The Catrobat Team
  * (<http://developer.catrobat.org/credits>)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 
 package org.catrobat.catroid.devices.arduino;
 
-
+import android.util.Log;
 
 import org.catrobat.catroid.bluetooth.base.BluetoothConnection;
 
@@ -52,6 +52,7 @@ public class ArduinoConnectionImpl implements ArduinoConnection {
 			isConnected = true;
 		} catch (IOException e) {
 			isConnected = false;
+			Log.d("KABOOOOOOOM", "exception", e);
 			//throw new ArduinoException(e, "Cannot establish BtConnection");
 		}
 	}
@@ -96,7 +97,7 @@ public class ArduinoConnectionImpl implements ArduinoConnection {
 		byte[] payload;
 
 		try {
-			while(arduinoInputStream.readByte() != 126);
+			while(arduinoInputStream.readByte() != 126) { };
 			arduinoInputStream.readFully(expectedLength, 0, 1);
 			payload = new byte[expectedLength[0] - 48];
 

@@ -153,9 +153,13 @@ public class BrickCategoryFragment extends SherlockListFragment {
 		if (SettingsActivity.isMindstormsNXTSharedPreferenceEnabled(getActivity())) {
 			categories.add(inflater.inflate(R.layout.brick_category_lego_nxt, null));
 		}
-
+		
 		if (SettingsActivity.isMindstormsEV3SharedPreferenceEnabled(getActivity())) {
 			categories.add(inflater.inflate(R.layout.brick_category_lego_ev3, null));
+		}
+
+		if (sharedPreferences.getBoolean("setting_arduino_bricks", false)) {
+			categories.add(inflater.inflate(R.layout.brick_category_arduino, null));
 		}
 
 		if (BuildConfig.FEATURE_USERBRICKS_ENABLED && brickAdapter.getUserBrick() == null) {

@@ -561,7 +561,7 @@
 
     <!-- Arduino Bricks -->
     <string name="brick_arduino_select_value">Set Arduino Pin</string>
-    <string name="brick_arduino_ir">command</string>
+    <string name="brick_arduino_ir">Send IR command</string>
     <string name="brick_arduino_ir_default_value">"add command here"</string>
     <string name="dialog_edit_arduino_ir_text">send command to arduino</string>
     <string name="dialog_edit_arduino_ir_title">Enter IR command</string>
@@ -816,8 +816,8 @@
     <string name="formula_editor_function_letter_parameter">(1,\'hello world\')</string>
     <string name="formula_editor_function_join">join</string>
     <string name="formula_editor_function_join_parameter">(\'hello\',\'world\')</string>
-    <string name="formula_editor_function_arduino_read_pin_value_digital">Arduino_digital_pin</string>
-    <string name="formula_editor_function_arduino_read_pin_value_analog">Arduino_analog_pin</string>
+    <string name="formula_editor_function_arduino_read_pin_value_digital">arduino_digital_pin</string>
+    <string name="formula_editor_function_arduino_read_pin_value_analog">arduino_analog_pin</string>
     <string name="formula_editor_function_list_item">element</string>
     <string name="formula_editor_function_list_item_parameter">(1,*list name*)</string>
     <string name="formula_editor_function_contains">contains</string>

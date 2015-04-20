@@ -31,6 +31,8 @@ import org.catrobat.catroid.common.BrickValues;
 import org.catrobat.catroid.common.MessageContainer;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.content.bricks.AddItemToUserListBrick;
+import org.catrobat.catroid.content.bricks.ArduinoIrBrick;
+import org.catrobat.catroid.content.bricks.ArduinoSendBrick;
 import org.catrobat.catroid.content.bricks.Brick;
 import org.catrobat.catroid.content.bricks.BroadcastBrick;
 import org.catrobat.catroid.content.bricks.BroadcastReceiverBrick;
@@ -148,6 +150,8 @@ public class CategoryBricksFactory {
 			tempList = setupLegoNxtCategoryList();
 		} else if (category.equals(context.getString(R.string.category_lego_ev3))) {
 			tempList = setupLegoEv3CategoryList();
+		} else if (category.equals(context.getString(R.string.category_arduino))) {
+			tempList = setupArduinoCategoryList();
 		} else if (category.equals(context.getString(R.string.category_drone))) {
 			tempList = setupDroneCategoryList();
 		} else if (category.equals(context.getString(R.string.category_phiro))) {
@@ -352,6 +356,13 @@ public class CategoryBricksFactory {
 		legoEV3BrickList.add(new LegoEv3SetLedBrick(LegoEv3SetLedBrick.LedStatus.LED_GREEN));
 
 		return legoEV3BrickList;
+	}
+
+	private List<Brick> setupArduinoCategoryList() {
+		List<Brick> arduinoBrickList = new ArrayList<Brick>();
+		arduinoBrickList.add(new ArduinoSendBrick());
+		arduinoBrickList.add(new ArduinoIrBrick("FFF"));
+		return arduinoBrickList;
 	}
 
 	private List<Brick> setupDroneCategoryList() {
