@@ -1,6 +1,6 @@
 /*
  * Catroid: An on-device visual programming system for Android devices
- * Copyright (C) 2010-2015 The Catrobat Team
+ * Copyright (C) 2010-2014 The Catrobat Team
  * (<http://developer.catrobat.org/credits>)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,11 +23,8 @@
 package org.catrobat.catroid.devices.arduino;
 
 import android.content.Context;
-
-
-import org.catrobat.catroid.bluetooth.base.BluetoothConnection;
 import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
-
+import org.catrobat.catroid.bluetooth.base.BluetoothConnection;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -52,11 +49,6 @@ public class ArduinoImpl implements Arduino {
 	}
 
 	@Override
-	public Class<? extends BluetoothDevice> getDeviceType() {
-		return BluetoothDevice.ARDUINO;
-	}
-
-	@Override
 	public void setConnection(BluetoothConnection btConnection) {
 		this.arduinoConnection = new ArduinoConnectionImpl(btConnection);
 	}
@@ -64,6 +56,11 @@ public class ArduinoImpl implements Arduino {
 	@Override
 	public UUID getBluetoothDeviceUUID() {
 		return ARDUINO_UUID;
+	}
+
+	@Override
+	public Class<? extends BluetoothDevice> getDeviceType() {
+		return BluetoothDevice.ARDUINO;
 	}
 
 	@Override
@@ -89,7 +86,9 @@ public class ArduinoImpl implements Arduino {
 	}
 
 	@Override
-	public void start() {}
+	public void start() {
+		initialise();
+	}
 
 	@Override
 	public void pause() {}
@@ -99,30 +98,13 @@ public class ArduinoImpl implements Arduino {
 
 	@Override
 	public void setDigitalArduinoPin(String digitalPinNumber, char pinValue) {
-		//prüfen ob länge 1, oder 2, ansonsten exception
 		byte[] message = parseMessage(digitalPinNumber);
-
 		message[2] = (byte) pinValue;
 		arduinoConnection.send(message);
 	}
 
 	@Override
-	public void sendArduinoMessage(String arduinoMessage){
-		//byte[] message = parseMessage(arduinoMessage);
-
-		byte[] byteMessage = new byte[arduinoMessage.length()];
-		for(int i = 0; i < arduinoMessage.length(); i++)
-		{
-
-			byteMessage[i] = arduinoMessage.getBytes()[i];
-
-		}
-		arduinoConnection.send(byteMessage);
-	}
-
-	@Override
 	public double getDigitalArduinoPin(String digitalPinNumber) {
-		//prüfen ob länge 1, oder 2, ansonsten exception
 		byte[] message = parseMessage(digitalPinNumber);
 		message[2] = 'D';
 
@@ -140,7 +122,6 @@ public class ArduinoImpl implements Arduino {
 
 	@Override
 	public double getAnalogArduinoPin(String analogPinNumber) {
-		//prüfen ob länge 1, oder 2, ansonsten exception
 		byte[] message = parseMessage(analogPinNumber);
 		message[2] = 'A';
 
@@ -148,6 +129,18 @@ public class ArduinoImpl implements Arduino {
 		byte[] value = Arrays.copyOfRange(receiveMessage, 3, receiveMessage.length);
 
 		return (double)Float.valueOf(Arrays.toString(value));
+	}
+
+	@Override
+	public void sendArduinoMessage(String arduinoMessage){
+		byte[] byteMessage = new byte[arduinoMessage.length()];
+		for(int i = 0; i < arduinoMessage.length(); i++)
+		{
+
+			byteMessage[i] = arduinoMessage.getBytes()[i];
+
+		}
+		arduinoConnection.send(byteMessage);
 	}
 
 	private byte[] parseMessage(String input)
