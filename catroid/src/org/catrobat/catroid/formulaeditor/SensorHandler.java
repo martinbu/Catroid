@@ -31,7 +31,7 @@ import android.util.Log;
 import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
 import org.catrobat.catroid.common.CatroidService;
 import org.catrobat.catroid.common.ServiceProvider;
-import org.catrobat.catroid.devices.arduino.phiropro.PhiroPro;
+import org.catrobat.catroid.devices.arduino.phiro.Phiro;
 import org.catrobat.catroid.facedetection.FaceDetectionHandler;
 
 public final class SensorHandler implements SensorEventListener, SensorCustomEventListener {
@@ -177,10 +177,10 @@ public final class SensorHandler implements SensorEventListener, SensorCustomEve
 			case PHIRO_PRO_FRONT_RIGHT:
 			case PHIRO_PRO_SIDE_LEFT:
 			case PHIRO_PRO_SIDE_RIGHT:
-				PhiroPro phiroPro = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).
-						getDevice(BluetoothDevice.PHIRO_PRO);
-				if (phiroPro != null) {
-					return Double.valueOf(phiroPro.getSensorValue(sensor));
+				Phiro Phiro = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).
+						getDevice(BluetoothDevice.PHIRO);
+				if (Phiro != null) {
+					return Double.valueOf(Phiro.getSensorValue(sensor));
 				}
 		}
 		return 0d;

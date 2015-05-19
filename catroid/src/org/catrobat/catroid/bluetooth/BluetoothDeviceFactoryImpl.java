@@ -26,7 +26,7 @@ import android.content.Context;
 
 import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
 import org.catrobat.catroid.bluetooth.base.BluetoothDeviceFactory;
-import org.catrobat.catroid.devices.arduino.phiropro.PhiroProImpl;
+import org.catrobat.catroid.devices.arduino.phiro.PhiroImpl;
 
 public class BluetoothDeviceFactoryImpl implements BluetoothDeviceFactory {
 
@@ -45,8 +45,8 @@ public class BluetoothDeviceFactoryImpl implements BluetoothDeviceFactory {
 //            return new Arduino();
 //        }
 
-		if (service == BluetoothDevice.PHIRO_PRO) {
-			return new PhiroProImpl();
+		if (service == BluetoothDevice.PHIRO) {
+			return new PhiroImpl();
 		}
 
 		return null; // may throw exception
