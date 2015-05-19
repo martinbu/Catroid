@@ -96,7 +96,7 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 			screen.removePreference(dronePreference);
 		}
 
-		if (!BuildConfig.FEATURE_PHIRO_PRO_ENABLED) {
+		if (!BuildConfig.FEATURE_PHIRO_ENABLED) {
 			PreferenceScreen phiroProPreference = (PreferenceScreen) findPreference(SETTINGS_SHOW_PHIRO_PRO_BRICKS);
 			phiroProPreference.setEnabled(false);
 			screen.removePreference(phiroProPreference);
