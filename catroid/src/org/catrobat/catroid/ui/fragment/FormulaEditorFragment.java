@@ -593,7 +593,7 @@ public class FormulaEditorFragment extends SherlockFragment implements OnKeyList
 		currentFormula.setDisplayText(newString);
 		updateBrickView();
 		currentFormula.refreshTextField(brickView, newString);
-		currentFormula.highlightTextField(brickView);
+		//currentFormula.highlightTextField(brickView);
 	}
 
 	private void showFormulaEditorListFragment(String tag, int actionbarResId) {

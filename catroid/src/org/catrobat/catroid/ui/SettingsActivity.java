@@ -43,7 +43,7 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 
 	public static final String SETTINGS_SHOW_LEGO_NXT_BRICKS = "setting_mindstorm_bricks";
 	public static final String SETTINGS_SHOW_PARROT_AR_DRONE_BRICKS = "setting_parrot_ar_drone_bricks";
-	private static final String SETTINGS_SHOW_PHIRO_PRO_BRICKS = "setting_enable_phiro_pro_bricks";
+	private static final String SETTINGS_SHOW_PHIRO_BRICKS = "setting_enable_phiro_bricks";
 	public static final String SETTINGS_PARROT_AR_DRONE_CATROBAT_TERMS_OF_SERVICE_ACCEPTED_PERMANENTLY = "setting_parrot_ar_drone_catrobat_terms_of_service_accepted_permanently";
 	PreferenceScreen screen = null;
 
@@ -97,9 +97,9 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 		}
 
 		if (!BuildConfig.FEATURE_PHIRO_ENABLED) {
-			PreferenceScreen phiroProPreference = (PreferenceScreen) findPreference(SETTINGS_SHOW_PHIRO_PRO_BRICKS);
-			phiroProPreference.setEnabled(false);
-			screen.removePreference(phiroProPreference);
+			PreferenceScreen phiroPreference = (PreferenceScreen) findPreference(SETTINGS_SHOW_PHIRO_BRICKS);
+			phiroPreference.setEnabled(false);
+			screen.removePreference(phiroPreference);
 		}
 	}
 
@@ -117,8 +117,8 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 				SETTINGS_PARROT_AR_DRONE_CATROBAT_TERMS_OF_SERVICE_ACCEPTED_PERMANENTLY, context);
 	}
 
-	public static boolean isPhiroProSharedPreferenceEnabled(Context context, boolean defaultValue) {
-		return getBooleanSharedPreference(defaultValue, SETTINGS_SHOW_PHIRO_PRO_BRICKS, context);
+	public static boolean isPhiroSharedPreferenceEnabled(Context context, boolean defaultValue) {
+		return getBooleanSharedPreference(defaultValue, SETTINGS_SHOW_PHIRO_BRICKS, context);
 	}
 
 	private static void setBooleanSharedPreference(boolean value, String settingsString, Context context) {
