@@ -54,7 +54,8 @@ public class PhiroSensorBrick extends FormulaBrick implements NestingBrick, OnIt
 	private transient PhiroSensorBrick copy;
 	private static final String TAG = PhiroSensorBrick.class.getSimpleName();
 
-	public PhiroSensorBrick() {
+	public PhiroSensorBrick()  {
+		addAllowedBrickField(BrickField.IF_PHIRO_SENSOR_CONDITION);
 	}
 
 	@Override

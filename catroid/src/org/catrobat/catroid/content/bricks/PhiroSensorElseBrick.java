@@ -77,7 +77,7 @@ public class PhiroSensorElseBrick extends BrickBaseType implements NestingBrick,
 		view = inflater.inflate(R.layout.brick_phiro_if_sensor_else, null);
 		view = getViewWithAlpha(alphaValue);
 
-		setCheckboxView(R.id.brick_phiro_pro_sensor_else_checkbox);
+		setCheckboxView(R.id.brick_phiro_sensor_else_checkbox);
 		final Brick brickInstance = this;
 
 		checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -96,11 +96,11 @@ public class PhiroSensorElseBrick extends BrickBaseType implements NestingBrick,
 
 		if (view != null) {
 
-			View layout = view.findViewById(R.id.brick_phiro_pro_sensor_else_layout);
+			View layout = view.findViewById(R.id.brick_phiro_sensor_else_layout);
 			Drawable background = layout.getBackground();
 			background.setAlpha(alphaValue);
 
-			TextView ifElseLabel = (TextView) view.findViewById(R.id.brick_phiro_pro_sensor_else_label);
+			TextView ifElseLabel = (TextView) view.findViewById(R.id.brick_phiro_sensor_else_label);
 			ifElseLabel.setTextColor(ifElseLabel.getTextColors().withAlpha(alphaValue));
 
 			this.alphaValue = (alphaValue);
