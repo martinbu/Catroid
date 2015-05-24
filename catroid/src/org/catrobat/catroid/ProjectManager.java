@@ -166,6 +166,10 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 			}
 		}
 
+		if (project != null) {
+			project.loadLegoNXTSettingsFromProject(context);
+		}
+
 	}
 
 	private void localizeBackgroundSprite(Context context) {
@@ -188,10 +192,12 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 		return StorageHandler.getInstance().loadProject(projectName) != null;
 	}
 
-	public void saveProject() {
+	public void saveProject(Context context) {
 		if (project == null) {
 			return;
 		}
+
+		project.saveLegoNXTSettingsToProject(context);
 
 		if (asynchronTask) {
 			SaveProjectAsynchronousTask saveTask = new SaveProjectAsynchronousTask();
@@ -310,7 +316,7 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 
 		if (directoryRenamed) {
 			project.setName(newProjectName);
-			saveProject();
+			saveProject(context);
 		}
 
 		if (!directoryRenamed) {
