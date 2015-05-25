@@ -23,13 +23,17 @@
 
 package org.catrobat.catroid.test.devices.phiro;
 
-import android.content.Context;
 import android.test.AndroidTestCase;
+
+import com.google.common.base.Stopwatch;
 
 import org.catrobat.catroid.common.bluetooth.ConnectionDataLogger;
 import org.catrobat.catroid.devices.arduino.common.firmata.BytesHelper;
 import org.catrobat.catroid.devices.arduino.phiro.Phiro;
 import org.catrobat.catroid.devices.arduino.phiro.PhiroImpl;
+
+import java.nio.ByteBuffer;
+import java.util.concurrent.TimeUnit;
 
 public class PhiroImplTest extends AndroidTestCase {
 
@@ -52,6 +56,18 @@ public class PhiroImplTest extends AndroidTestCase {
 	private static final int PIN_RIGHT_MOTOR_FORWARD = 12;
 	private static final int PIN_RIGHT_MOTOR_BACKWARD = 13;
 
+	private static final int MIN_PWM_PIN = 3;
+	private static final int MAX_PWM_PIN = 13;
+
+	private static final int MIN_SENSOR_PIN = 0;
+	private static final int MAX_SENSOR_PIN = 5;
+
+	private static final int PWM_MODE = 3;
+
+	private static final int SET_PIN_MODE_COMMAND = 0xF4;
+	private static final int REPORT_ANALOG_PIN_COMMAND = 0xC0;
+	private static final int ANALOG_MESSAGE_COMMAND = 0xE0;
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -59,7 +75,6 @@ public class PhiroImplTest extends AndroidTestCase {
 		phiro = new PhiroImpl();
 		logger = ConnectionDataLogger.createLocalConnectionLogger();
 		phiro.setConnection(logger.getConnectionProxy());
-		phiro.initialise();
 	}
 
 	@Override
@@ -69,45 +84,173 @@ public class PhiroImplTest extends AndroidTestCase {
 		super.tearDown();
 	}
 
-	private static final int SPEED = 42;
-	private static final byte ANALOG_MESSAGE = (byte)0xE0;
+	private static final int SPEED_IN_PERCENT = 42;
 
 	public void testMoveLeftMotorForward() {
-		phiro.moveLeftMotorForward(SPEED);
-		testSpeed(SPEED, PIN_LEFT_MOTOR_FORWARD);
+		phiro.initialise();
+		doTestFirmataInitialization();
+
+		phiro.moveLeftMotorForward(SPEED_IN_PERCENT);
+		testSpeed(SPEED_IN_PERCENT, PIN_LEFT_MOTOR_FORWARD);
 	}
 
-	private void testSpeed(int speed, int pin) {
-		assertEquals("Exspected analog command", ANALOG_MESSAGE | BytesHelper.encodeChannel(pin), logger.getNextSentMessage());
-		assertEquals("Exspected analog command", BytesHelper.lsb(speed), logger.getNextSentMessage());
-		assertEquals("Exspected analog command", BytesHelper.msb(speed), logger.getNextSentMessage());
+	public void testMoveLeftMotorBackward() {
+		phiro.initialise();
+		doTestFirmataInitialization();
+
+		phiro.moveLeftMotorBackward(SPEED_IN_PERCENT);
+		testSpeed(SPEED_IN_PERCENT, PIN_LEFT_MOTOR_BACKWARD);
 	}
 
-	public void testMoveLeftMotorBackward(int speed) {
+	public void testMoveRightMotorForward() {
+		phiro.initialise();
+		doTestFirmataInitialization();
 
+		phiro.moveRightMotorForward(SPEED_IN_PERCENT);
+		testSpeed(SPEED_IN_PERCENT, PIN_RIGHT_MOTOR_FORWARD);
 	}
 
-	public void testMoveRightMotorForward(int speed) {
+	public void testMoveRightMotorBackward() {
+		phiro.initialise();
+		doTestFirmataInitialization();
 
-	}
-
-	public void testMoveRightMotorBackward(int speed) {
-
+		phiro.moveRightMotorBackward(SPEED_IN_PERCENT);
+		testSpeed(SPEED_IN_PERCENT, PIN_RIGHT_MOTOR_BACKWARD);
 	}
 
 	public void testStopLeftMotor() {
+		phiro.initialise();
+		doTestFirmataInitialization();
 
+		phiro.stopLeftMotor();
+		testSpeed(0, PIN_LEFT_MOTOR_FORWARD);
+		testSpeed(0, PIN_LEFT_MOTOR_BACKWARD);
 	}
 
 	public void testStopRightMotor() {
+		phiro.initialise();
+		doTestFirmataInitialization();
 
+		phiro.stopRightMotor();
+		testSpeed(0, PIN_RIGHT_MOTOR_FORWARD);
+		testSpeed(0, PIN_RIGHT_MOTOR_BACKWARD);
 	}
 
 	public void testStopAllMovements() {
+		phiro.initialise();
+		doTestFirmataInitialization();
 
+		phiro.stopAllMovements();
+		testSpeed(0, PIN_LEFT_MOTOR_FORWARD);
+		testSpeed(0, PIN_LEFT_MOTOR_BACKWARD);
+		testSpeed(0, PIN_RIGHT_MOTOR_FORWARD);
+		testSpeed(0, PIN_RIGHT_MOTOR_BACKWARD);
 	}
 
+	public void testSetLeftRGBLightColor() {
+		phiro.initialise();
+		doTestFirmataInitialization();
 
+		int red = 242;
+		int green = 0;
+		int blue = 3;
+
+		phiro.setLeftRGBLightColor(red, green, blue);
+		testLight(red, PIN_RGB_RED_LEFT);
+		testLight(green, PIN_RGB_GREEN_LEFT);
+		testLight(blue, PIN_RGB_BLUE_LEFT);
+	}
+
+	public void testSetRightRGBLightColor() {
+		phiro.initialise();
+		doTestFirmataInitialization();
+
+		int red = 242;
+		int green = 1;
+		int blue = 3;
+
+		phiro.setRightRGBLightColor(red, green, blue);
+		testLight(red, PIN_RGB_RED_RIGHT);
+		testLight(green, PIN_RGB_GREEN_RIGHT);
+		testLight(blue, PIN_RGB_BLUE_RIGHT);
+	}
+
+	public void testPlayTone() throws InterruptedException {
+		phiro.initialise();
+		doTestFirmataInitialization();
+
+		int tone = 294;
+		int durationInSeconds = 1;
+
+		phiro.playTone(tone, durationInSeconds);
+
+		assertEquals("Wrong command, ANALOG_MESSAGE command on speaker pin expected",
+				ANALOG_MESSAGE_COMMAND | BytesHelper.encodeChannel(PIN_SPEAKER_OUT), getNextMessage());
+		assertEquals("Wrong lsb speed", BytesHelper.lsb(tone), getNextMessage());
+		assertEquals("Wrong msb speed", BytesHelper.msb(tone), getNextMessage());
+
+		Stopwatch stopwatch = Stopwatch.createStarted();
+		while (stopwatch.elapsed(TimeUnit.SECONDS) < durationInSeconds) {
+			assertEquals("Phiro play tone was stopped to early", 0, logger.getSentMessages().size());
+			Thread.sleep(durationInSeconds * 100);
+		}
+
+		assertEquals("Wrong command, ANALOG_MESSAGE command on speaker pin expected",
+				ANALOG_MESSAGE_COMMAND | BytesHelper.encodeChannel(PIN_SPEAKER_OUT), getNextMessage());
+		assertEquals("Wrong lsb speed", 0, getNextMessage());
+		assertEquals("Wrong msb speed", 0, getNextMessage());
+	}
+	
+	private void doTestFirmataInitialization() {
+		for (int i = MIN_PWM_PIN; i <= MAX_PWM_PIN; ++i) {
+			assertEquals("Wrong Command, SET_PIN_MODE command expected", SET_PIN_MODE_COMMAND, getNextMessage());
+			assertEquals("Wrong pin used to set pin mode", i, getNextMessage());
+			assertEquals("Wrong pin mode is used", PWM_MODE, getNextMessage());
+		}
+
+		testReportAnalogPin(true);
+	}
+
+	private void testReportAnalogPin(boolean enable) {
+		for (int i = MIN_SENSOR_PIN; i <= MAX_SENSOR_PIN; ++i) {
+			assertEquals("Wrong Command, REPORT_ANALOG_PIN command expected",
+					REPORT_ANALOG_PIN_COMMAND | BytesHelper.encodeChannel(i), getNextMessage());
+			assertEquals("Wrong pin mode is used", enable ? 1 : 0, getNextMessage());
+		}
+	}
+
+	private int getNextMessage() {
+		byte[] message = logger.getNextSentMessage();
+		assertNotNull("Their is no message", message);
+		ByteBuffer bb = ByteBuffer.wrap(message);
+		return bb.getInt();
+	}
+
+	private void testSpeed(int speed_in_percent, int pin) {
+		int speed = percentToSpeed(speed_in_percent);
+		assertEquals("Wrong command, ANALOG_MESSAGE command expected",
+				ANALOG_MESSAGE_COMMAND | BytesHelper.encodeChannel(pin), getNextMessage());
+		assertEquals("Wrong lsb speed", BytesHelper.lsb(speed), getNextMessage());
+		assertEquals("Wrong msb speed", BytesHelper.msb(speed), getNextMessage());
+	}
+
+	private void testLight(int color, int pin) {
+		assertEquals("Wrong command, ANALOG_MESSAGE command expected",
+				ANALOG_MESSAGE_COMMAND | BytesHelper.encodeChannel(pin), getNextMessage());
+		assertEquals("Wrong lsb color", BytesHelper.lsb(color), getNextMessage());
+		assertEquals("Wrong msb color", BytesHelper.msb(color), getNextMessage());
+	}
+
+	private int percentToSpeed(int percent) {
+		if (percent <= 0) {
+			return 0;
+		}
+		if (percent >= 100) {
+			return 255;
+		}
+
+		return (int)(percent * 2.55);
+	}
 
 
 }
