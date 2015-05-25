@@ -101,7 +101,7 @@ public class FormulaEditorListFragment extends SherlockListFragment implements D
 			R.string.formula_editor_sensor_face_detected, R.string.formula_editor_sensor_face_size,
 			R.string.formula_editor_sensor_face_x_position, R.string.formula_editor_sensor_face_y_position };
 
-	private static final int[] SENSOR_ITEMS_WITH_phiro = { R.string.formula_editor_sensor_x_acceleration,
+	private static final int[] SENSOR_ITEMS_WITH_PHIRO = { R.string.formula_editor_sensor_x_acceleration,
 			R.string.formula_editor_sensor_y_acceleration, R.string.formula_editor_sensor_z_acceleration,
 			R.string.formula_editor_sensor_compass_direction, R.string.formula_editor_sensor_x_inclination,
 			R.string.formula_editor_sensor_y_inclination, R.string.formula_editor_sensor_loudness,
@@ -171,7 +171,7 @@ public class FormulaEditorListFragment extends SherlockListFragment implements D
 		ProjectManager.getInstance().getCurrentProject().setIsPhiroProProject(false);
 		if (((sharedPreferences.getBoolean("setting_enable_phiro_bricks", false)) || (ProjectManager.getInstance()
 				.getCurrentProject().checkIfPhiroProProject())) && tag == SENSOR_TAG) {
-			itemsIds = SENSOR_ITEMS_WITH_phiro;
+			itemsIds = SENSOR_ITEMS_WITH_PHIRO;
 			ProjectManager.getInstance().getCurrentProject().setIsPhiroProProject(true);
 		} else {
 			if (tag == OBJECT_TAG) {
