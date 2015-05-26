@@ -43,6 +43,9 @@ import org.catrobat.catroid.content.bricks.IfLogicElseBrick;
 import org.catrobat.catroid.content.bricks.IfLogicEndBrick;
 import org.catrobat.catroid.content.bricks.LoopBeginBrick;
 import org.catrobat.catroid.content.bricks.LoopEndBrick;
+import org.catrobat.catroid.content.bricks.PhiroSensorBrick;
+import org.catrobat.catroid.content.bricks.PhiroSensorElseBrick;
+import org.catrobat.catroid.content.bricks.PhiroSensorEndBrick;
 import org.catrobat.catroid.content.bricks.UserBrick;
 import org.catrobat.catroid.exceptions.CompatibilityProjectException;
 import org.catrobat.catroid.exceptions.LoadingProjectException;
@@ -477,6 +480,7 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 
 	private void correctAllNestedReferences(Script script) {
 		ArrayList<IfLogicBeginBrick> ifBeginList = new ArrayList<IfLogicBeginBrick>();
+		ArrayList<PhiroSensorBrick> ifSensorBeginList = new ArrayList<PhiroSensorBrick>();
 		ArrayList<LoopBeginBrick> loopBeginList = new ArrayList<LoopBeginBrick>();
 		for (Brick currentBrick : script.getBrickList()) {
 			if (currentBrick instanceof IfLogicBeginBrick) {
@@ -500,6 +504,20 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 				((IfLogicEndBrick) currentBrick).setIfBeginBrick(ifBeginBrick);
 				((IfLogicEndBrick) currentBrick).setIfElseBrick(elseBrick);
 				ifBeginList.remove(ifBeginBrick);
+			} else if (currentBrick instanceof PhiroSensorBrick) {
+				ifSensorBeginList.add((PhiroSensorBrick) currentBrick);
+			} else if (currentBrick instanceof PhiroSensorElseBrick) {
+				PhiroSensorBrick phiroSensorBrick = ifSensorBeginList.get(ifSensorBeginList.size() - 1);
+				phiroSensorBrick.setPhiroSensorElseBrick((PhiroSensorElseBrick) currentBrick);
+				((PhiroSensorElseBrick) currentBrick).setPhiroProSensorBeginBrick(phiroSensorBrick);
+			} else if (currentBrick instanceof PhiroSensorEndBrick) {
+				PhiroSensorBrick phiroSensorBrick = ifSensorBeginList.get(ifSensorBeginList.size() - 1);
+				PhiroSensorElseBrick elseBrick = phiroSensorBrick.getPhiroSensorElseBrick();
+				phiroSensorBrick.setPhiroSensorEndBrick((PhiroSensorEndBrick) currentBrick);
+				elseBrick.setPhiroSensorEndBrick((PhiroSensorEndBrick) currentBrick);
+				((PhiroSensorEndBrick) currentBrick).setPhiroProBeginBrick(phiroSensorBrick);
+				((PhiroSensorEndBrick) currentBrick).setPhiroProElseBrick(elseBrick);
+				ifSensorBeginList.remove(phiroSensorBrick);
 			}
 		}
 	}

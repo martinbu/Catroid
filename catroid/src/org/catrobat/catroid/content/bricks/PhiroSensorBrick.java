@@ -33,6 +33,7 @@ import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
@@ -47,12 +48,12 @@ import java.util.List;
 public class PhiroSensorBrick extends FormulaBrick implements NestingBrick, OnItemSelectedListener {
 
 	private static final long serialVersionUID = 1L;
+	private static final String TAG = PhiroSensorBrick.class.getSimpleName();
 	private transient View prototypeView;
 	private int sensorSpinnerPosition = 0;
 	protected transient PhiroSensorElseBrick phiroSensorElseBrick;
 	protected transient PhiroSensorEndBrick phiroSensorEndBrick;
 	private transient PhiroSensorBrick copy;
-	private static final String TAG = PhiroSensorBrick.class.getSimpleName();
 
 	public PhiroSensorBrick()  {
 		addAllowedBrickField(BrickField.IF_PHIRO_SENSOR_CONDITION);
@@ -61,12 +62,6 @@ public class PhiroSensorBrick extends FormulaBrick implements NestingBrick, OnIt
 	@Override
 	public int getRequiredResources() {
 		return BLUETOOTH_PHIRO;
-	}
-
-	@Override
-	public Brick copyBrickForSprite(Sprite sprite) {
-		PhiroSensorBrick copyBrick = (PhiroSensorBrick) clone();
-		return copyBrick;
 	}
 
 	@Override
@@ -87,7 +82,6 @@ public class PhiroSensorBrick extends FormulaBrick implements NestingBrick, OnIt
 		return prototypeView;
 
 	}
-
 
 	@Override
 	public boolean isInitialized() {
@@ -174,6 +168,7 @@ public class PhiroSensorBrick extends FormulaBrick implements NestingBrick, OnIt
 
 		setCheckboxView(R.id.brick_phiro_sensor_checkbox);
 		final Brick brickInstance = this;
+
 		checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -202,14 +197,14 @@ public class PhiroSensorBrick extends FormulaBrick implements NestingBrick, OnIt
 
 		phiroProSensorSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				sensorSpinnerPosition = position;
-			}
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			sensorSpinnerPosition = position;
+		}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}
 		});
 
 		return view;
@@ -225,6 +220,13 @@ public class PhiroSensorBrick extends FormulaBrick implements NestingBrick, OnIt
 			Spinner phiroProSensorSpinner = (Spinner) view.findViewById(R.id.brick_phiro_sensor_action_spinner);
 			phiroProSensorSpinner.getBackground().setAlpha(alphaValue);
 
+			TextView ifLabel = (TextView) view.findViewById(R.id.brick_phiro_sensor_label);
+			TextView ifLabelSecondPart = (TextView) view.findViewById(R.id.brick_phiro_sensor_action_label);
+			TextView ifLabelEnd = (TextView) view.findViewById(R.id.phiro_sensor_label_second_part);
+
+			ifLabel.setTextColor(ifLabel.getTextColors().withAlpha(alphaValue));
+			ifLabelSecondPart.setTextColor(ifLabel.getTextColors().withAlpha(alphaValue));
+			ifLabelEnd.setTextColor(ifLabelEnd.getTextColors().withAlpha(alphaValue));
 			this.alphaValue = (alphaValue);
 		}
 		return view;
@@ -250,5 +252,14 @@ public class PhiroSensorBrick extends FormulaBrick implements NestingBrick, OnIt
 		returnActionList.add(ifAction);
 
 		return returnActionList;
+	}
+
+	@Override
+	public Brick copyBrickForSprite(Sprite sprite) {
+		PhiroSensorBrick copyBrick = (PhiroSensorBrick) clone();
+		copyBrick.phiroSensorElseBrick = null; //if the Formula gets a field sprite, a separate copy method will be needed
+		copyBrick.phiroSensorEndBrick = null;
+		this.copy = copyBrick;
+		return copyBrick;
 	}
 }
