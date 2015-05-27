@@ -301,7 +301,7 @@ public class PhiroIfBrickTest extends BaseActivityInstrumentationTestCase<MainMe
 		UiTestUtils.acceptAndCloseActionMode(solo);
 
 		UiTestUtils.openActionMode(solo, solo.getString(R.string.delete), R.id.delete, getActivity());
-		solo.clickOnCheckBox(3);
+		solo.clickOnCheckBox(6);
 
 		CheckBox firstIfLogicBeginBrickCheckBox = (CheckBox) solo.getView(R.id.brick_phiro_sensor_checkbox, 0);
 		CheckBox secondIfLogicBeginBrickCheckBox = (CheckBox) solo.getView(R.id.brick_phiro_sensor_checkbox, 1);
@@ -336,14 +336,14 @@ public class PhiroIfBrickTest extends BaseActivityInstrumentationTestCase<MainMe
 		UiTestUtils.acceptAndCloseActionMode(solo);
 
 		UiTestUtils.openActionMode(solo, solo.getString(R.string.delete), R.id.delete, getActivity());
-		UiTestUtils.clickOnCheckBox(solo, 4);
+		UiTestUtils.clickOnCheckBox(solo, 1);
 
 		ifLogicBeginBrickCheckbox = (CheckBox) solo.getView(R.id.brick_phiro_sensor_checkbox);
 		ifLogicElseBrickCheckbox = (CheckBox) solo.getView(R.id.brick_phiro_sensor_else_checkbox);
 		ifLogicEndBrickCheckbox = (CheckBox) solo.getView(R.id.brick_phiro_sensor_end_if_checkbox);
 		changeYByNBrickCheckbox = (CheckBox) solo.getView(R.id.brick_change_y_checkbox);
 
-		assertFalse("CheckBox is not checked but shouldn be.", ifLogicBeginBrickCheckbox.isChecked()
+		assertTrue("CheckBox is not checked but shouldn be.", ifLogicBeginBrickCheckbox.isChecked()
 				&& ifLogicElseBrickCheckbox.isChecked() && ifLogicEndBrickCheckbox.isChecked());
 		assertFalse("CheckBox is checked but shouldn't be.", changeYByNBrickCheckbox.isChecked());
 	}
