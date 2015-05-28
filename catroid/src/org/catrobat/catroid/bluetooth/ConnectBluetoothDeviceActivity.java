@@ -225,7 +225,6 @@ public class ConnectBluetoothDeviceActivity extends Activity {
 
 		createAndSetDeviceService();
 
-		//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.device_list);
 		setTitle(getString(R.string.select_device) + " " + btDevice.getName());
 
