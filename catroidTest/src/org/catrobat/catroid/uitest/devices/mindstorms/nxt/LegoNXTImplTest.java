@@ -180,8 +180,7 @@ public class LegoNXTImplTest extends BaseActivityInstrumentationTestCase<MainMen
 
 		ArrayList<String> autoConnectIDs = new ArrayList<String>();
 		autoConnectIDs.add("IM_NOT_A_MAC_ADDRESS");
-		ConnectBluetoothDeviceActivity deviceListActivity = new ConnectBluetoothDeviceActivity();
-		Reflection.setPrivateField(deviceListActivity, "autoConnectIDs", autoConnectIDs);
+		Reflection.setPrivateField(ConnectBluetoothDeviceActivity.class, "autoConnectIDs", autoConnectIDs);
 
 		BluetoothTestUtils.enableBluetooth();
 

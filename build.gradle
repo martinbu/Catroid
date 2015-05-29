@@ -3,6 +3,7 @@ import java.util.regex.Pattern
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.1'
@@ -50,7 +51,8 @@ configurations {
 
 dependencies {
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.android.support:support-v4:22.1.0'
+    compile 'com.android.support:support-annotations:21.0.3'
     compile 'com.google.guava:guava:18.0'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
     compile 'com.google.code.gson:gson:2.3.1'
@@ -66,6 +68,11 @@ dependencies {
     androidTestCompile fileTree(include: '*.jar', dir: 'catroidTest/libs')
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
     pmd 'net.sourceforge.pmd:pmd:5.1.1'
+
+    androidTestCompile "org.mockito:mockito-core:1.+"
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+
 }
 
 task copyAndroidNatives() {
@@ -127,7 +134,8 @@ android {
         targetSdkVersion 22
         applicationId 'org.catrobat.catroid'
         testApplicationId "org.catrobat.catroid.test"
-        testInstrumentationRunner 'pl.polidea.instrumentation.PolideaInstrumentationTestRunner'
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionCode 21
         println "VersionCode is " + versionCode
         versionName "0.9.14"
@@ -181,6 +189,11 @@ android {
         htmlReport false
         xmlOutput file("build/reports/lint.xml")
     }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+
 }
 
 if (project.hasProperty('jenkins')) {
