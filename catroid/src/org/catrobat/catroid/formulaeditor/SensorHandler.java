@@ -171,12 +171,12 @@ public final class SensorHandler implements SensorEventListener, SensorCustomEve
 			case LOUDNESS:
 				return (double) instance.loudness;
 
-			case PHIRO_PRO_BOTTOM_LEFT:
-			case PHIRO_PRO_BOTTOM_RIGHT:
-			case PHIRO_PRO_FRONT_LEFT:
-			case PHIRO_PRO_FRONT_RIGHT:
-			case PHIRO_PRO_SIDE_LEFT:
-			case PHIRO_PRO_SIDE_RIGHT:
+			case PHIRO_BOTTOM_LEFT:
+			case PHIRO_BOTTOM_RIGHT:
+			case PHIRO_FRONT_LEFT:
+			case PHIRO_FRONT_RIGHT:
+			case PHIRO_SIDE_LEFT:
+			case PHIRO_SIDE_RIGHT:
 				Phiro phiro = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).
 						getDevice(BluetoothDevice.PHIRO);
 				if (phiro != null) {
