@@ -373,10 +373,16 @@ public class FormulaElement implements Serializable {
 				return interpretFunctionJoin(sprite);
 			case ARDUINODIGITAL:
 				Arduino arduinoDigital = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).getDevice(BluetoothDevice.ARDUINO);
-				return arduinoDigital.getDigitalArduinoPin(left.toString());
+				if (arduinoDigital != null) {
+					return arduinoDigital.getDigitalArduinoPin(left.toString());
+				}
+				break;
 			case ARDUINOANALOG:
 				Arduino arduinoAnalog = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).getDevice(BluetoothDevice.ARDUINO);
-				return arduinoAnalog.getAnalogArduinoPin(left.toString());
+				if (arduinoAnalog != null) {
+					return arduinoAnalog.getAnalogArduinoPin(left.toString());
+				}
+				break;
 			case LIST_ITEM:
 				return interpretFunctionListItem(left, sprite);
 			case CONTAINS:
@@ -924,6 +930,12 @@ public class FormulaElement implements Serializable {
 				case PHIRO_BOTTOM_RIGHT:
 					resources |= Brick.BLUETOOTH_PHIRO;
 					break;
+
+				case ARDUINOANALOG:
+				case ARDUINODIGITAL:
+					resources |= Brick.BLUETOOTH_SENSORS_ARDUINO;
+					break;
+
 				default:
 
 			}

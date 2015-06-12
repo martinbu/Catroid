@@ -72,7 +72,15 @@ public class ArduinoImpl implements Arduino {
 
 	@Override
 	public boolean isAlive() {
-		return false;
+		byte[] message = parseMessage("13");
+		message[2] = 'D';
+
+		try {
+			arduinoConnection.sendAndReceive(message);
+			return true;
+		} catch (ArduinoException e) {
+			return false;
+		}
 	}
 
 	@Override
@@ -100,7 +108,11 @@ public class ArduinoImpl implements Arduino {
 	public void setDigitalArduinoPin(String digitalPinNumber, char pinValue) {
 		byte[] message = parseMessage(digitalPinNumber);
 		message[2] = (byte) pinValue;
-		arduinoConnection.send(message);
+
+		try {
+			arduinoConnection.send(message);
+		} catch (ArduinoException e) {
+		}
 	}
 
 	@Override
@@ -108,15 +120,19 @@ public class ArduinoImpl implements Arduino {
 		byte[] message = parseMessage(digitalPinNumber);
 		message[2] = 'D';
 
-		byte[] receiveMessage = arduinoConnection.sendAndReceive(message);
+		try {
+			byte[] receiveMessage = arduinoConnection.sendAndReceive(message);
 
-		switch(receiveMessage[receiveMessage.length - 1]) {
-			case 72:
-				return 1.0;
-			case 76:
-				return 0.0;
-			default:
-				return -1.0;
+			switch(receiveMessage[receiveMessage.length - 1]) {
+				case 72:
+					return 1.0;
+				case 76:
+					return 0.0;
+				default:
+					return -1.0;
+			}
+		} catch (ArduinoException e) {
+			return -1;
 		}
 	}
 
@@ -125,10 +141,14 @@ public class ArduinoImpl implements Arduino {
 		byte[] message = parseMessage(analogPinNumber);
 		message[2] = 'A';
 
-		byte[] receiveMessage = arduinoConnection.sendAndReceive(message);
-		byte[] value = Arrays.copyOfRange(receiveMessage, 3, receiveMessage.length);
+		try {
+			byte[] receiveMessage = arduinoConnection.sendAndReceive(message);
+			byte[] value = Arrays.copyOfRange(receiveMessage, 3, receiveMessage.length);
 
-		return (double)Float.valueOf(Arrays.toString(value));
+			return (double) Float.valueOf(Arrays.toString(value));
+		} catch (ArduinoException e) {
+			return -1;
+		}
 	}
 
 	@Override
@@ -140,7 +160,10 @@ public class ArduinoImpl implements Arduino {
 			byteMessage[i] = arduinoMessage.getBytes()[i];
 
 		}
-		arduinoConnection.send(byteMessage);
+		try {
+			arduinoConnection.send(byteMessage);
+		} catch (ArduinoException e) {
+		}
 	}
 
 	private byte[] parseMessage(String input)
