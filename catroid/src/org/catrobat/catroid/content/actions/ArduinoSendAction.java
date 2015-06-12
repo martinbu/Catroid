@@ -51,6 +51,9 @@ public class ArduinoSendAction extends TemporalAction {
 	@Override
 	protected void update(float percent) {
 		Arduino arduino = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).getDevice(BluetoothDevice.ARDUINO);
-		if(arduino != null) { arduino.setDigitalArduinoPin(pinNumber, (char) pinValue); }
+
+		if(arduino != null) {
+			arduino.setDigitalArduinoPin(pinNumber, (char) pinValue);
+		}
 	}
 }

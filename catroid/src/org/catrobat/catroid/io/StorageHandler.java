@@ -46,6 +46,8 @@ import org.catrobat.catroid.content.StartScript;
 import org.catrobat.catroid.content.WhenScript;
 import org.catrobat.catroid.content.XmlHeader;
 import org.catrobat.catroid.content.bricks.AddItemToUserListBrick;
+import org.catrobat.catroid.content.bricks.ArduinoIrBrick;
+import org.catrobat.catroid.content.bricks.ArduinoSendBrick;
 import org.catrobat.catroid.content.bricks.Brick;
 import org.catrobat.catroid.content.bricks.BrickBaseType;
 import org.catrobat.catroid.content.bricks.BroadcastBrick;
@@ -321,6 +323,9 @@ public final class StorageHandler {
 		xstream.alias("brick", PhiroPlayToneBrick.class);
 		xstream.alias("brick", PhiroRGBLightBrick.class);
 		xstream.alias("brick", PhiroIfLogicBeginBrick.class);
+
+		xstream.alias("brick", ArduinoSendBrick.class);
+		xstream.alias("brick", ArduinoIrBrick.class);
 
 		xstream.alias("userBrickElements", UserScriptDefinitionBrickElements.class);
 		xstream.alias("userBrickElement", UserScriptDefinitionBrickElement.class);
