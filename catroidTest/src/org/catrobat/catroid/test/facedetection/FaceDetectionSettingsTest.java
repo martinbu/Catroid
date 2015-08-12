@@ -55,6 +55,12 @@ public class FaceDetectionSettingsTest extends InstrumentationTestCase {
 		SettingsActivity.setFaceDetectionSharedPreferenceEnabled(context, false);
 	}
 
+	@Override
+	protected void tearDown() throws Exception {
+		SettingsActivity.setFaceDetectionSharedPreferenceEnabled(context, false);
+		super.tearDown();
+	}
+
 	public void testIfFaceDetectionIsEnabledIfItIsUsedInAProgram() throws IOException, CompatibilityProjectException, OutdatedVersionProjectException, LoadingProjectException {
 
 		createProjectFaceDetection();

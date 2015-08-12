@@ -55,6 +55,12 @@ public class PhiroSettingsTest extends InstrumentationTestCase {
 		SettingsActivity.setPhiroSharedPreferenceEnabled(context, false);
 	}
 
+	@Override
+	protected void tearDown() throws Exception {
+		SettingsActivity.setPhiroSharedPreferenceEnabled(context, false);
+		super.tearDown();
+	}
+
 	public void testIfPhiroBricksAreEnabledIfItItUsedInAProgram() throws IOException, CompatibilityProjectException, OutdatedVersionProjectException, LoadingProjectException {
 
 		createProjectPhiro();
